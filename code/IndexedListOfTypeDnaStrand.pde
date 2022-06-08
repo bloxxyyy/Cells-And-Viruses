@@ -1,7 +1,7 @@
 public class IndexListOfTypeStrand {
   
   public int currentIndex = 0;
-  private DnaStrandTypes[] DnaStrands = new  DnaStrandTypes[0];
+  private DnaStrandTypes[] DnaStrands = new DnaStrandTypes[0];
   
   public void Add(DnaStrandTypes strand) {
     var newSize = DnaStrands.length + 1; //<>//

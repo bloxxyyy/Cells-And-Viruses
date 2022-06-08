@@ -1,3 +1,3 @@
 public enum DnaStrandTypes {
-  FORWARD, STASIS
+  FORWARD, STASIS, BREED, SEARCH, ABSORB, INFECTED
 };
