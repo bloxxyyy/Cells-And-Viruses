@@ -3,22 +3,7 @@ ArrayList<RedBloodCell> RedBloodCells;
 void setup() {
   size(640, 480);  
   RedBloodCells = new ArrayList<RedBloodCell>();
-  SetStartingCells();
-  
-  /*
-  var bla = new IndexListOfTypeStrand();
-  var l = bla.Count();
-  var strands = bla.GetStrandsInArrayFormat();
-  bla.Add(DnaStrandTypes.FORWARD);
-  bla.Add(DnaStrandTypes.FORWARD);
-  bla.Add(DnaStrandTypes.STASIS);
-  bla.Add(DnaStrandTypes.STASIS);
-  bla.Add(DnaStrandTypes.FORWARD);
-  bla.RemoveAtPosition(2);
-  bla.AddTypeAtPosition(DnaStrandTypes.STASIS, 1);
-  strands = bla.GetStrandsInArrayFormat(); //<>//
-  print(strands);
-  */
+  SetStartingCells(); //<>//
 }
 
 void draw() {
