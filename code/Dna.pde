@@ -1,4 +1,4 @@
-public class Dna  {  
+public class Dna {  
   public IndexListOfTypeStrand DnaStrand = new IndexListOfTypeStrand();
   private int _DnaStrandSize = 2; // good starter, based on enviroment we might add more.
   
