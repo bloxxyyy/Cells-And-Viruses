@@ -1,5 +1,5 @@
 ArrayList<RedBloodCell> RedBloodCells;
-Clock clock = new Clock(300000);
+Clock clock = new Clock(600);
 
 void setup() {
   size(640, 480);  
