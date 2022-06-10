@@ -1,9 +1,10 @@
 ArrayList<RedBloodCell> RedBloodCells;
+Clock clock = new Clock(3000);
 
 void setup() {
   size(640, 480);  
   RedBloodCells = new ArrayList<RedBloodCell>();
-  SetStartingCells(); //<>//
+  SetStartingCells(); //<>// //<>//
 }
 
 void draw() {
@@ -13,6 +14,8 @@ void draw() {
     var cell = RedBloodCells.get(i);
     DisplayCell(cell, cell.IsVirus());
   }
+  
+  clock.PrintDate();
 }
 
 void SetStartingCells() {
