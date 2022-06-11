@@ -1,9 +1,21 @@
 public class Dna {  
+  
   public IndexListOfTypeStrand DnaStrand = new IndexListOfTypeStrand();
-  private int _DnaStrandSize = 2; // good starter, based on enviroment we might add more.
+  private int _DnaStrandSize = 4;
   
   public Dna() {
     GenerateFirstDnaStrand();
+  }
+  
+  long OldMinute = 0;
+  public DnaStrandTypes GetActionOfDnaStrand(Clock clock) {
+    var currentMinute = clock.GetClockTimeMinutes();
+    if (OldMinute != currentMinute) {
+      OldMinute = currentMinute;
+      return DnaStrand.GetNext();
+    }
+    
+    return DnaStrand.GetCurrent();
   }
   
   public void GenerateFirstDnaStrand() {

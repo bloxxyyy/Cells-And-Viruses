@@ -3,6 +3,21 @@ public class Cell implements ICell, IPosition {
   private String _Name;
   private Dna _Dna = new Dna();
   
+  public void DoAction(Clock clock) {
+     var type = _Dna.GetActionOfDnaStrand(clock);
+     var speed = 3;
+     
+     if (type != DnaStrandTypes.STASIS) {
+       var r = floor(random(0, 4));
+       if (r == 0 && _Position.x + speed < width) _Position = new PVector(_Position.x + speed, _Position.y);
+       if (r == 1 && _Position.x - speed > 0) _Position = new PVector(_Position.x - speed, _Position.y);
+       if (r == 2 && _Position.y + speed < height) _Position = new PVector(_Position.x, _Position.y + speed);
+       if (r == 3 && _Position.y - speed > 0) _Position = new PVector(_Position.x, _Position.y - speed);
+     }
+     
+     
+  }
+  
   public void SetName(String name) {
     _Name = name;
   }

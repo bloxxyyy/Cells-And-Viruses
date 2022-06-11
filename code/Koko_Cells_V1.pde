@@ -1,5 +1,5 @@
 ArrayList<Cell> cells;
-Clock clock = new Clock(600);
+Clock clock = new Clock(60);
 
 void setup() {
   size(640, 480);  
@@ -12,6 +12,7 @@ void draw() {
   
   for (int i = 0; i < cells.size(); i++) {
     var cell = cells.get(i);
+    cell.DoAction(clock);
     DisplayCell(cell, cell.IsVirus());
   }
   
@@ -19,7 +20,7 @@ void draw() {
 }
 
 void SetStartingCells() {
-  int cellCount = 10;
+  int cellCount = 80;
  
   for (int i = 0; i < cellCount; i++) {
     var cell = new Cell();
@@ -27,7 +28,7 @@ void SetStartingCells() {
     if (cell.IsVirus()) cell.SetName("Virus Cell");
     else cell.SetName("Red Blood Cell");
     
-    cell.SetPosition(new PVector(random(10, 400), random(10, 400)));
+    cell.SetPosition(new PVector(random(10, 630), random(10, 470)));
     cells.add(cell);
   }
 }
