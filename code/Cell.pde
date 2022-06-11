@@ -1,4 +1,4 @@
-public class RedBloodCell implements ICell, IPosition {
+public class Cell implements ICell, IPosition {
   private PVector _Position;
   private String _Name;
   private Dna _Dna = new Dna();

@@ -1,17 +1,17 @@
-ArrayList<RedBloodCell> RedBloodCells;
+ArrayList<Cell> cells;
 Clock clock = new Clock(600);
 
 void setup() {
   size(640, 480);  
-  RedBloodCells = new ArrayList<RedBloodCell>();
-  SetStartingCells(); //<>// //<>//
+  cells = new ArrayList<Cell>();
+  SetStartingCells(); //<>//
 }
 
 void draw() {
   background(0);
   
-  for (int i = 0; i < RedBloodCells.size(); i++) {
-    var cell = RedBloodCells.get(i);
+  for (int i = 0; i < cells.size(); i++) {
+    var cell = cells.get(i);
     DisplayCell(cell, cell.IsVirus());
   }
   
@@ -22,17 +22,17 @@ void SetStartingCells() {
   int cellCount = 10;
  
   for (int i = 0; i < cellCount; i++) {
-    var cell = new RedBloodCell();
+    var cell = new Cell();
     
     if (cell.IsVirus()) cell.SetName("Virus Cell");
     else cell.SetName("Red Blood Cell");
     
     cell.SetPosition(new PVector(random(10, 400), random(10, 400)));
-    RedBloodCells.add(cell);
+    cells.add(cell);
   }
 }
 
-void DisplayCell(RedBloodCell cell, boolean virus) {
+void DisplayCell(Cell cell, boolean virus) {
   int cellSize = 16;
   stroke(255);
   
