@@ -12,7 +12,7 @@ void draw() {
   
   for (int i = 0; i < cells.size(); i++) {
     var cell = cells.get(i);
-    cell.DoAction(clock);
+    cell.DoAction(clock, cells);
     DisplayCell(cell, cell.IsVirus());
   }
   

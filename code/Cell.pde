@@ -3,7 +3,7 @@ public class Cell implements ICell, IPosition {
   private String _Name;
   private Dna _Dna = new Dna();
   
-  public void DoAction(Clock clock) {
+  public void DoAction(Clock clock, ArrayList<Cell> cells) {
      var type = _Dna.GetActionOfDnaStrand(clock);
      var speed = 3;
      
@@ -15,7 +15,37 @@ public class Cell implements ICell, IPosition {
        if (r == 3 && _Position.y - speed > 0) _Position = new PVector(_Position.x, _Position.y - speed);
      }
      
+     if (type == DnaStrandTypes.FIND  && IsVirus()) {
+       Cell cell = GetNearestNormalCell(cells);
+       var tempPos = new PVector(cell.getPosition().x, cell.getPosition().y);
+       var direction = tempPos.sub(getPosition()).normalize();
+       var directionSpeed = new PVector(direction.x * speed, direction.y * speed);
+       _Position = getPosition().add(directionSpeed);
+     }
      
+     
+  }
+  
+  private Cell GetNearestNormalCell(ArrayList<Cell> cells) {
+    
+    Cell cloasestCell = null;
+    float closestDistance = -1;
+    
+    for (int i = 0; i < cells.size(); i++) {
+      if (!cells.get(i).IsVirus()) {
+
+          float thisDistance = _Position.dist(cells.get(i).getPosition());
+      
+          if (thisDistance < closestDistance || closestDistance == -1)
+          {
+             closestDistance = thisDistance;
+             cloasestCell = cells.get(i);
+          }
+        
+      }
+    }
+    
+    return cloasestCell;
   }
   
   public void SetName(String name) {
