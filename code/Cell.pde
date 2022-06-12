@@ -132,6 +132,7 @@ public class Cell implements ICell, IPosition {
          float thisDistance = _Position.dist(cells.get(i).getPosition());
          if (thisDistance < _Size / 2) {
            cells.get(i).SetIntegrationCell(this);
+           cells.get(i).GetDna().DnaStrand.Add(DnaStrandTypes.BREED);
            cells.remove(this);
          }
       }
