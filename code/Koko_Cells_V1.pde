@@ -5,6 +5,8 @@ void setup() {
   size(640, 480);  
   cells = new ArrayList<Cell>();
   SetStartingCells(); //<>//
+ 
+  
 }
 
 void draw() {
@@ -13,10 +15,10 @@ void draw() {
   for (int i = 0; i < cells.size(); i++) {
     var cell = cells.get(i);
     cell.DoAction(clock, cells);
-    DisplayCell(cell, cell.IsVirus());
+    DisplayCell(cell, cell.IsVirus(), cell.IsCytotoxicTcell());
   }
   
-  clock.PrintDate();
+  //clock.PrintDate();
 }
 
 void SetStartingCells() {
@@ -26,6 +28,7 @@ void SetStartingCells() {
     var cell = new Cell();
     
     if (cell.IsVirus()) cell.SetName("Virus Cell");
+    if (cell.IsCytotoxicTcell()) cell.SetName("T-Killer Cell");
     else cell.SetName("Red Blood Cell");
     
     cell.SetPosition(new PVector(random(10, 630), random(10, 470)));
@@ -33,12 +36,11 @@ void SetStartingCells() {
   }
 }
 
-void DisplayCell(Cell cell, boolean virus) {
-  int cellSize = 16;
+void DisplayCell(Cell cell, boolean virus, boolean tKillerCell) {
   stroke(255);
-  
   if (virus) fill(0, 255, 0);
+  else if (tKillerCell) fill(255, 255, 255);
   else  fill(255, 0, 0);
     
-  circle(cell.getPosition().x, cell.getPosition().y, cellSize);
+  circle(cell.getPosition().x, cell.getPosition().y, cell.GetSize());
 }

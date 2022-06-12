@@ -1,7 +1,7 @@
 public class Dna {  
   
   public IndexListOfTypeStrand DnaStrand = new IndexListOfTypeStrand();
-  private int _DnaStrandSize = 4;
+  private int _DnaStrandSize = 6;
   
   public Dna() {
     GenerateFirstDnaStrand();
@@ -19,9 +19,30 @@ public class Dna {
   }
   
   public void GenerateFirstDnaStrand() {
+    int size = DnaStrandTypes.values().length;
+    DnaStrandTypes type = DnaStrandTypes.STASIS;
+
     for (int i = 0; i < _DnaStrandSize; i++) {
-      int size = DnaStrandTypes.values().length;
-      DnaStrandTypes type = DnaStrandTypes.values()[(int)random(0, size)];
+      boolean allowedType = false;
+      
+      while (!allowedType) {
+        type = DnaStrandTypes.values()[(int)random(0, size)];
+        
+        if (type == DnaStrandTypes.INFECTED || type == DnaStrandTypes.ERREDICATE) {
+          var hasTypeNotAllowed = false;
+          
+          for (int s = 0; s < DnaStrand.Count(); s++) {
+            if (DnaStrand.GetStrandsInArrayFormat()[s] == DnaStrandTypes.ERREDICATE) hasTypeNotAllowed = true;
+            if (DnaStrand.GetStrandsInArrayFormat()[s] == DnaStrandTypes.INFECTED) hasTypeNotAllowed = true;
+          }
+          
+          if (!hasTypeNotAllowed) allowedType = true;
+        } else {
+          allowedType = true;
+        }
+        
+      }
+      
       DnaStrand.Add(type);
     }
   }
