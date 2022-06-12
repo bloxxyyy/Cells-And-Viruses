@@ -1,10 +1,11 @@
 public class IndexListOfTypeStrand {
   
+  public int currentSelectedStrand = 0;
   public int currentIndex = 0;
   private DnaStrandTypes[] DnaStrands = new DnaStrandTypes[0];
   
   public void Add(DnaStrandTypes strand) {
-    var newSize = DnaStrands.length + 1; //<>//
+    var newSize = DnaStrands.length + 1; //<>// //<>//
     DnaStrandTypes[] tempArray = new DnaStrandTypes[newSize];
     
     for(int i = 0; i < DnaStrands.length; i++)
@@ -39,6 +40,8 @@ public class IndexListOfTypeStrand {
       
        DnaStrands = new DnaStrandTypes[newSize];
        DnaStrands = tempArray;
+       
+       if (index >= currentSelectedStrand) currentSelectedStrand--;
   }
   
   ///
@@ -66,7 +69,21 @@ public class IndexListOfTypeStrand {
       }
       
        DnaStrands = new DnaStrandTypes[newSize];
-       DnaStrands = tempArray; 
+       DnaStrands = tempArray;
+       
+       if (index <= currentSelectedStrand) currentSelectedStrand++;
+  }
+  
+  public DnaStrandTypes GetCurrent() {
+    return DnaStrands[currentSelectedStrand];
+  }
+  
+  public DnaStrandTypes GetNext() {
+    currentSelectedStrand++;
+    
+    if (currentSelectedStrand >= Count()) currentSelectedStrand = 0;
+    
+    return DnaStrands[currentSelectedStrand];
   }
   
   public DnaStrandTypes[] GetStrandsInArrayFormat() {
