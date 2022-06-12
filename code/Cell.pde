@@ -1,13 +1,23 @@
 public class Cell implements ICell, IPosition {
   private PVector _Position;
   private String _Name;
-  private Dna _Dna = new Dna();
+  private Dna _Dna;
   private int _Size = 16;
   
   private Cell _IntegratedCell = null;
+  private int _FoodTick = 0;
+  private int _DieWhenNotFedTickCount = 10;
+  
+  public Cell(boolean canBeStartupVirus) {
+    _Dna = new Dna(canBeStartupVirus);
+  }
+  
+  private DnaStrandTypes oldType = DnaStrandTypes.STASIS;
+  private DnaStrandTypes currentType = DnaStrandTypes.STASIS;
   
   public void DoAction(Clock clock, ArrayList<Cell> cells) {
      var type = _Dna.GetActionOfDnaStrand(clock);
+     currentType = type;
      var speed = 3;
      
      if (type != DnaStrandTypes.STASIS) {
@@ -16,6 +26,27 @@ public class Cell implements ICell, IPosition {
        if (r == 1 && _Position.x - speed > 0) _Position = new PVector(_Position.x - speed, _Position.y);
        if (r == 2 && _Position.y + speed < height) _Position = new PVector(_Position.x, _Position.y + speed);
        if (r == 3 && _Position.y - speed > 0) _Position = new PVector(_Position.x, _Position.y - speed);
+     }
+     
+     if (IsVirus()) {
+       if (oldType != currentType) {;
+         _FoodTick++;
+         if (_FoodTick >= _DieWhenNotFedTickCount) {
+           cells.remove(this);
+         }
+       }
+     }
+     
+     if (IsCytotoxicTcell()) {
+       if (oldType != currentType) {
+         _FoodTick++;
+         if (_FoodTick >= _DieWhenNotFedTickCount) {
+           Cell cell = new Cell(false);
+           cell.SetPosition(_Position);
+           cells.add(cell);
+           cells.remove(this);
+         }
+       }
      }
      
      if (type == DnaStrandTypes.FIND && IsCytotoxicTcell()) {
@@ -53,7 +84,7 @@ public class Cell implements ICell, IPosition {
      if (type == DnaStrandTypes.BREED && !IsVirus() && !IsCytotoxicTcell()) {
        if (_IntegratedCell != null && _IntegratedCell.IsVirus()) { 
          for (int i = 0; i < 5; i++) {
-          var cell = new Cell();
+          var cell = new Cell(false);
           cell.SetDna(_IntegratedCell.GetDna());
           cell.SetPosition(_Position);
           cells.add(cell);
@@ -61,6 +92,8 @@ public class Cell implements ICell, IPosition {
           cells.remove(this);
        }
      }
+     
+     oldType = currentType;
   }
   
   private Cell GetNearestVirusCell(ArrayList<Cell> cells) {
@@ -110,9 +143,12 @@ public class Cell implements ICell, IPosition {
   private void RemoveTouchingNormalCell(ArrayList<Cell> cells) {
     for (int i = 0; i < cells.size(); i++) {
       if (!cells.get(i).IsVirus() && !cells.get(i).IsCytotoxicTcell() && !cells.get(i).HasIntegratedVirusCell()) {
-          
+          var x = _Position;
          float thisDistance = _Position.dist(cells.get(i).getPosition());
-           if (thisDistance < _Size / 2) cells.remove(cells.get(i));
+           if (thisDistance < _Size / 2) {
+             cells.remove(cells.get(i));
+             _FoodTick = 0;
+           }
       }
     }
   }
@@ -121,7 +157,10 @@ public class Cell implements ICell, IPosition {
     for (int i = 0; i < cells.size(); i++) {
       if (cells.get(i).IsVirus()) {
          float thisDistance = _Position.dist(cells.get(i).getPosition());
-           if (thisDistance < _Size / 2) cells.remove(cells.get(i));
+           if (thisDistance < _Size / 2) {
+             cells.remove(cells.get(i));
+             _FoodTick = 0;
+           }
       }
     }
   }

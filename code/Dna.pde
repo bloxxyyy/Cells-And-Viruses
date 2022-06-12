@@ -3,8 +3,8 @@ public class Dna {
   public IndexListOfTypeStrand DnaStrand = new IndexListOfTypeStrand();
   private int _DnaStrandSize = 6;
   
-  public Dna() {
-    GenerateFirstDnaStrand();
+  public Dna(boolean canBeVirus) {
+    GenerateFirstDnaStrand(canBeVirus);
   }
   
   long OldMinute = 0;
@@ -18,7 +18,7 @@ public class Dna {
     return DnaStrand.GetCurrent();
   }
   
-  public void GenerateFirstDnaStrand() {
+  public void GenerateFirstDnaStrand(boolean canBeVirus) {
     int size = DnaStrandTypes.values().length;
     DnaStrandTypes type = DnaStrandTypes.STASIS;
 
@@ -35,6 +35,8 @@ public class Dna {
             if (DnaStrand.GetStrandsInArrayFormat()[s] == DnaStrandTypes.ERREDICATE) hasTypeNotAllowed = true;
             if (DnaStrand.GetStrandsInArrayFormat()[s] == DnaStrandTypes.INFECTED) hasTypeNotAllowed = true;
           }
+          
+          if(!canBeVirus) hasTypeNotAllowed = true;
           
           if (!hasTypeNotAllowed) allowedType = true;
         } else {

@@ -4,7 +4,7 @@ Clock clock = new Clock(60);
 void setup() {
   size(640, 480);  
   cells = new ArrayList<Cell>();
-  SetStartingCells(); //<>//
+  SetStartingCells(); //<>// //<>//
  
   
 }
@@ -25,7 +25,7 @@ void SetStartingCells() {
   int cellCount = 80;
  
   for (int i = 0; i < cellCount; i++) {
-    var cell = new Cell();
+    var cell = new Cell(true);
     
     if (cell.IsVirus()) cell.SetName("Virus Cell");
     if (cell.IsCytotoxicTcell()) cell.SetName("T-Killer Cell");

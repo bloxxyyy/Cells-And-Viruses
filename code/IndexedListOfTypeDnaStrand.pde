@@ -5,7 +5,7 @@ public class IndexListOfTypeStrand {
   private DnaStrandTypes[] DnaStrands = new DnaStrandTypes[0];
   
   public void Add(DnaStrandTypes strand) {
-    var newSize = DnaStrands.length + 1; //<>//
+    var newSize = DnaStrands.length + 1; //<>// //<>//
     DnaStrandTypes[] tempArray = new DnaStrandTypes[newSize];
     
     for(int i = 0; i < DnaStrands.length; i++)
